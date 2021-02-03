@@ -118,8 +118,31 @@ const viewDepartments = () => {
 }
 
 const addRole = () => {
-
-    promptAction()
+    inquirer
+        .prompt([
+            {
+                name: "title",
+                type: "input",
+                message: "What is the name of the job title you would like to add?"
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What is the salary for this role?"
+            },
+            {
+                name: "department_id",
+                type: "input",
+                message: "What is the department id for this role?"
+            }
+        ]).then(answer => {
+            connection.query("INSERT INTO role(title, salary, department_id) VALUES (?,?,?)", [answer.title, answer.salary, answer.department_id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`${answer.title} has been added as a new role with a salary of ${answer.salary} and a department id of ${answer.department_id} `)
+                    promptAction()
+                })
+        })
 }
 
 const viewRoles = () => {
