@@ -43,8 +43,40 @@ const promptAction = () => {
 }
 
 const addEmployee = () => {
+    inquirer
+        .prompt([
+            {
+                name: "first_name",
+                type: "input",
+                message: "Enter new employee's first name "
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "Enter new employee's last name"
+            },
+            {
+                name: "role",
+                type: "input",
+                message: "What is their role id? ",
 
-    promptAction()
+            },
+            {
+                name: "choice",
+                type: "input",
+                message: "Whats their manager's id?",
+            }
+        ]).then(answer => {
+            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [answer.first_name, answer.last_name, answer.role, answer.manager],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`${answer.first_name} ${answer.last_name} was added as a new employee.`)
+                    promptAction()
+                })
+        })
+
+
+
 }
 
 const viewEmployees = () => {
