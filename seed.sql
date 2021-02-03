@@ -27,6 +27,8 @@ PRIMARY KEY (id)
 );
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES("John", "Doe",10,1);
+INSERT INTO role (title, salary,department_id) VALUES ("Accountant",80000, 300);
+INSERT INTO department (name) VALUES ("Accounting");
 
 SELECT * FROM department;
 SELECT * FROM role;

@@ -64,7 +64,12 @@ const addDepartment = () => {
 
 const viewDepartments = () => {
 
-    promptAction()
+    connection.query("SELECT * FROM department;", (err, result) => {
+        if (err) throw err
+        console.table(result)
+        promptAction()
+    })
+
 }
 
 const addRole = () => {
@@ -74,5 +79,9 @@ const addRole = () => {
 
 const viewRoles = () => {
 
-    promptAction()
+    connection.query("SELECT * FROM role;", (err, result) => {
+        if (err) throw err
+        console.table(result)
+        promptAction()
+    })
 }
