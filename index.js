@@ -25,19 +25,54 @@ const promptAction = () => {
     ]).then(answer => {
         console.log(answer)
         if (answer.action === choices[0]) {
-            artistSearch()
+            addEmployee()
         } else if (answer.action === choices[1]) {
-            multiSearch()
+            viewEmployees()
         } else if (answer.action === choices[2]) {
-            rangeSearch()
+            addDepartment()
         } else if (answer.action === choices[3]) {
-            songSearch()
+            viewDepartments()
         } else if (answer.action === choices[4]) {
-            songSearch()
+            addRole()
         } else if (answer.action === choices[5]) {
-            songSearch()
+            viewRoles()
         } else {
             exit()
         }
     })
+}
+
+const addEmployee = () => {
+
+    promptAction()
+}
+
+const viewEmployees = () => {
+
+    connection.query("SELECT * FROM employee;", (err, result) => {
+        if (err) throw err
+        console.table(result)
+        promptAction()
+    })
+
+}
+
+const addDepartment = () => {
+
+    promptAction()
+}
+
+const viewDepartments = () => {
+
+    promptAction()
+}
+
+const addRole = () => {
+
+    promptAction()
+}
+
+const viewRoles = () => {
+
+    promptAction()
 }
