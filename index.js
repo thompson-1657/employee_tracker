@@ -90,8 +90,21 @@ const viewEmployees = () => {
 }
 
 const addDepartment = () => {
-
-    promptAction()
+    inquirer
+        .prompt([
+            {
+                name: "name",
+                type: "input",
+                message: "What is the name of the department you would like to add? "
+            }
+        ]).then(answer => {
+            connection.query("INSERT INTO department(name) VALUES (?)", [answer.name],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`${answer.name} has been added as a new department.`)
+                    promptAction()
+                })
+        })
 }
 
 const viewDepartments = () => {
