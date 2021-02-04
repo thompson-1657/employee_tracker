@@ -13,7 +13,7 @@ connection.connect(err => {
 
 })
 
-const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Exit']
+const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Delete Department', 'Delete Role', 'Exit']
 const promptAction = () => {
     inquirer.prompt([
         {
@@ -40,6 +40,10 @@ const promptAction = () => {
             updateRole()
         } else if (answer.action === choices[7]) {
             deleteEmployee()
+        } else if (answer.action === choices[8]) {
+            deleteDepartment()
+        } else if (answer.action === choices[9]) {
+            deleteRole()
         } else {
             exit()
         }
@@ -195,6 +199,44 @@ const deleteEmployee = () => {
                 (err, result) => {
                     if (err) throw err
                     console.log(`Employee with the id of ${answer.id} has been removed`)
+                    promptAction()
+                })
+        })
+}
+
+const deleteDepartment = () => {
+    inquirer
+        .prompt([
+            {
+                name: "id",
+                type: "input",
+                message: "What is the id of the department you would like to remove?"
+            }
+        ]).then(answer => {
+            connection.query("DELETE FROM department WHERE id = ?",
+                [answer.id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`The department with the id of ${answer.id} has been removed`)
+                    promptAction()
+                })
+        })
+}
+
+const deleteRole = () => {
+    inquirer
+        .prompt([
+            {
+                name: "id",
+                type: "input",
+                message: "What is the id of the role you would like to remove?"
+            }
+        ]).then(answer => {
+            connection.query("DELETE FROM role WHERE id = ?",
+                [answer.id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`The role with the id of ${answer.id} has been removed`)
                     promptAction()
                 })
         })
