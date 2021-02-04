@@ -13,7 +13,7 @@ connection.connect(err => {
 
 })
 
-const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Delete Department', 'Delete Role', 'Exit']
+const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Delete Department', 'Delete Role', 'View employees by manager', 'Exit']
 const promptAction = () => {
     inquirer.prompt([
         {
@@ -44,6 +44,8 @@ const promptAction = () => {
             deleteDepartment()
         } else if (answer.action === choices[9]) {
             deleteRole()
+        } else if (answer.action === choices[10]) {
+            viewByManager()
         } else {
             exit()
         }
@@ -70,12 +72,12 @@ const addEmployee = () => {
 
             },
             {
-                name: "choice",
+                name: "manager_id",
                 type: "input",
                 message: "Whats their manager's id?",
             }
         ]).then(answer => {
-            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [answer.first_name, answer.last_name, answer.role, answer.manager],
+            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [answer.first_name, answer.last_name, answer.role, answer.manager_id],
                 (err, result) => {
                     if (err) throw err
                     console.log(`${answer.first_name} ${answer.last_name} was added as a new employee.`)
@@ -237,6 +239,25 @@ const deleteRole = () => {
                 (err, result) => {
                     if (err) throw err
                     console.log(`The role with the id of ${answer.id} has been removed`)
+                    promptAction()
+                })
+        })
+}
+
+const viewByManager = () => {
+    inquirer
+        .prompt([
+            {
+                name: "manager_id",
+                type: "input",
+                message: "To view employees by manager, enter the manager id"
+            }
+        ]).then(answer => {
+            connection.query("SELECT * FROM employee WHERE manager_id = ?",
+                [answer.manager_id],
+                (err, result) => {
+                    if (err) throw err
+                    console.table(result)
                     promptAction()
                 })
         })
