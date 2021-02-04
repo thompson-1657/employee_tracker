@@ -13,7 +13,7 @@ connection.connect(err => {
 
 })
 
-const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Delete Department', 'Delete Role', 'View employees by manager', 'Exit']
+const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Delete Department', 'Delete Role', 'View employees by manager', 'Update Employee Managers', 'Exit']
 const promptAction = () => {
     inquirer.prompt([
         {
@@ -46,6 +46,8 @@ const promptAction = () => {
             deleteRole()
         } else if (answer.action === choices[10]) {
             viewByManager()
+        } else if (answer.action === choices[11]) {
+            updateEmpManager()
         } else {
             exit()
         }
@@ -258,6 +260,29 @@ const viewByManager = () => {
                 (err, result) => {
                     if (err) throw err
                     console.table(result)
+                    promptAction()
+                })
+        })
+}
+
+const updateEmpManager = () => {
+    inquirer
+        .prompt([
+            {
+                name: "manager_id",
+                type: "input",
+                message: "What is the new manager id you would like to update the employee to?"
+            },
+            {
+                name: "id",
+                type: "input",
+                message: "What is the id of the employee who's manager you would like to update?"
+            }
+        ]).then(answer => {
+            connection.query("UPDATE employee SET manager_id = ? WHERE id = ?", [answer.manager_id, answer.id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`Employee with the id of ${answer.id} now has the manager with the id of  ${answer.manager_id}`)
                     promptAction()
                 })
         })
