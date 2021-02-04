@@ -13,7 +13,7 @@ connection.connect(err => {
 
 })
 
-const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Exit']
+const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Delete Employee', 'Exit']
 const promptAction = () => {
     inquirer.prompt([
         {
@@ -38,6 +38,8 @@ const promptAction = () => {
             viewRoles()
         } else if (answer.action === choices[6]) {
             updateRole()
+        } else if (answer.action === choices[7]) {
+            deleteEmployee()
         } else {
             exit()
         }
@@ -177,7 +179,23 @@ const updateRole = () => {
                     promptAction()
                 })
         })
+}
 
-
-
+const deleteEmployee = () => {
+    inquirer
+        .prompt([
+            {
+                name: "id",
+                type: "input",
+                message: "What is the id of the employee you would like to remove?"
+            }
+        ]).then(answer => {
+            connection.query("DELETE FROM employee WHERE id = ?",
+                [answer.id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`Employee with the id of ${answer.id} has been removed`)
+                    promptAction()
+                })
+        })
 }
