@@ -13,7 +13,7 @@ connection.connect(err => {
 
 })
 
-const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Exit']
+const choices = ['Add Employee', 'View Employees', 'Add Department', 'View Departments', 'Add Role', 'View Roles', 'Update employee role', 'Exit']
 const promptAction = () => {
     inquirer.prompt([
         {
@@ -36,6 +36,8 @@ const promptAction = () => {
             addRole()
         } else if (answer.action === choices[5]) {
             viewRoles()
+        } else if (answer.action === choices[6]) {
+            updateRole()
         } else {
             exit()
         }
@@ -152,4 +154,30 @@ const viewRoles = () => {
         console.table(result)
         promptAction()
     })
+}
+
+const updateRole = () => {
+    inquirer
+        .prompt([
+            {
+                name: "role_id",
+                type: "input",
+                message: "What is the role id you would like to update the employee to?"
+            },
+            {
+                name: "id",
+                type: "input",
+                message: "What is the id of the employee who's role you would like to update"
+            }
+        ]).then(answer => {
+            connection.query("UPDATE employee SET role_id = ? WHERE id = ?", [answer.role_id, answer.id],
+                (err, result) => {
+                    if (err) throw err
+                    console.log(`Employee with the id of ${answer.id} is now has to role id ${answer.role_id}`)
+                    promptAction()
+                })
+        })
+
+
+
 }
