@@ -23,7 +23,7 @@ const promptAction = () => {
             choices: choices
         }
     ]).then(answer => {
-        console.log(answer)
+        
         if (answer.action === choices[0]) {
             addEmployee()
         } else if (answer.action === choices[1]) {
@@ -49,7 +49,8 @@ const promptAction = () => {
         } else if (answer.action === choices[11]) {
             updateEmpManager()
         } else {
-            exit()
+            console.log(`You have exited your employee database.`)
+           process.exit()
         }
     })
 }
@@ -76,10 +77,15 @@ const addEmployee = () => {
             {
                 name: "manager_id",
                 type: "input",
-                message: "Whats their manager's id?",
+                message: "What is their manager's id, if employees does not have a manager enter 0?",
             }
         ]).then(answer => {
-            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [answer.first_name, answer.last_name, answer.role, answer.manager_id],
+            if (answer.manager_id == 0) {
+                manager_id = null
+            } else{
+                manager_id = answer.manager_id
+            }
+            connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)", [answer.first_name, answer.last_name, answer.role, manager_id],
                 (err, result) => {
                     if (err) throw err
                     console.log(`${answer.first_name} ${answer.last_name} was added as a new employee.`)
