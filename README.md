@@ -33,7 +33,6 @@ Once cloned the user can run
 
 ```
 npm install
-
 ```
 
 in the terminal to install the package.json and the node modules. Be sure to change user and password in the server.js file to your MySQL username and password in order to connect. The application can then be run in the terminal command line by entering
@@ -46,7 +45,7 @@ node index.js
 
 ---
 
-[![recording](https://user-images.githubusercontent.com/71091515/107426105-6cc77c80-6ae5-11eb-9b11-bf5b8ecbe751.gif)](https://drive.google.com/file/d/1B_juTmwazFvRxD76DrBd7VJx9PjLh6JH/view)
+[![recording](https://user-images.githubusercontent.com/71091515/107465929-dd43bd00-6b28-11eb-9363-06a3cac29406.gif)](https://drive.google.com/file/d/1ZKVlOUydpmJA84RmLcggW3cbB25iy6ms/view)
 Click gif to link to the full usage video.
 
 Following the installation of the application the program can be utilized by opening the terminal and entering
@@ -55,7 +54,7 @@ Following the installation of the application the program can be utilized by ope
 node index.js
 ```
 
-in the command line. The user will be prompted to Add Employee, View Employees, Add Department, View Departments, Add Role, View Roles, Update Employee Role, Delete Employee, Delete Department, Delete Role or View Employees by Manager. Through the Inquirer package the user is prompted to submit answers based on their choices from the original prompt. The inital prompt will generate again and again so the user can accomplish multiple tasks involving their database. Once the user is finished viewing, adding, or editing their employee database they can click on the choose the 'Exit' option and will be exited from the applications command line with the display text 'You have exited your employee database.' In the future the user can re-enter the application by rerunning node index.js in the command line.
+in the command line. The user will be prompted to Add Employee, View Employees, Add Department, View Departments, Add Role, View Roles, Update Employee Role, Delete Employee, Delete Department or Delete Role. Through the Inquirer package the user is prompted to submit answers based on their choices from the original prompt. The inital prompt will generate again and again so the user can accomplish multiple tasks involving their database. Once the user is finished viewing, adding, or editing their employee database they can click on the choose the 'Exit' option and will be exited from the applications command line with the display text 'You have exited your employee database.' In the future the user can re-enter the application by rerunning node index.js in the command line.
 
 ## Technologies
 
